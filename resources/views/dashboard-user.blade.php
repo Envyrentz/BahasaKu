@@ -1,0 +1,49 @@
+@extends('layouts.main')
+
+@section('content')
+
+    @if (session('success'))
+    <div id="error-alert" class="bg-green-500 py-2 rounded-md flex items-center justify-between w-full px-3 text-white font-semibold">
+        <p>{{  session('success') }}</p>
+        <svg id="close-error" class="hover:cursor-pointer text-white/80 flex items-center" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="m12 14.122l5.303 5.303a1.5 1.5 0 0 0 2.122-2.122L14.12 12l5.304-5.303a1.5 1.5 0 1 0-2.122-2.121L12 9.879L6.697 4.576a1.5 1.5 0 1 0-2.122 2.12L9.88 12l-5.304 5.304a1.5 1.5 0 1 0 2.122 2.12z"/></g></svg>
+    </div>
+    @endif
+    @if($errors->any())
+    <div id="error-alert" class="bg-red-400 py-1 rounded-md flex items-center justify-between w-full px-3 text-white font-semibold">
+        <p>{{  $errors->first() }}</p>
+        <svg id="close-error" class="hover:cursor-pointer text-white/80 flex items-center" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="m12 14.122l5.303 5.303a1.5 1.5 0 0 0 2.122-2.122L14.12 12l5.304-5.303a1.5 1.5 0 1 0-2.122-2.121L12 9.879L6.697 4.576a1.5 1.5 0 1 0-2.122 2.12L9.88 12l-5.304 5.304a1.5 1.5 0 1 0 2.122 2.12z"/></g></svg>
+    </div>
+    @endif
+
+    <div id="dashboard-user" class="h-[50vh] md:h-[55vh] absolute inset-0 z-0 flex flex-col justify-center w-full">
+        <div class="px-[10vw] md:px-[20vw] text-white text-xl md:text-2xl font-semibold">
+            <img src="{{ asset('images/pattern.png') }}" alt="Pattern" class="w-[55%] md:w-[25%]">
+            <p class=" mt-4">"Belajar tanpa berpikir itu sia-sia. Berpikir tanpa belajar itu berbahaya."</p>
+            <p class="mt-5">- Confucius</p>
+        </div>
+    </div>
+
+    <div class="flex justify-between mt-[47vh] items-center">
+        <div class="border-s-4 border-[#395670] text-3xl font-bold text-[#395670] px-3">Sukses Dimulai dari Belajar</div>
+        <div class="flex justify-end md:-me-20">
+            <img src="{{ asset('images/pattern-right.png') }}" alt="pattern-right" class="w-[70%]">
+        </div>
+    </div>
+
+    <div class="md:flex md:justify-between md:gap-14 mt-10 text-sm text-[#395670] pb-10">
+        @if (count($contents) > 0)
+            @foreach ($contents as $index => $content)
+            <div class="rounded-lg md:min-w-[20vw] md:max-vw-[30vw] mt-10 md:mt-0 @if($index == 1) bg-[#F500001A] @elseif($index == 2) bg-[#E6A8001A] @else bg-[#00E66F1A] @endif shadow-md shadow-gray-500 p-3">
+                <p class="text-xl font-bold">{{ $content->title }}</p>
+                <p>{{ $content->preview }}</p>
+                <div class="mt-3">
+                    <a href="{{ route('materi.user.show', $content->id) }}" class="rounded-lg p-1 border-2 border-[#395670]/70 font-semibold mt-4">Selengkapnya</a>
+                </div>
+            </div>
+            @endforeach
+        @else
+            <div class="text-lg">Belum ada materi</div>
+        @endif
+    </div>
+
+@endsection
